@@ -6,6 +6,7 @@ const cors = require("cors");
 app.use(cors({ origin: "http://localhost:3000/" }));
 
 app.get("/", (req, res) => {
+    console.log(req.ip, req.url);
     res.send("Hello World!");
 })
 
