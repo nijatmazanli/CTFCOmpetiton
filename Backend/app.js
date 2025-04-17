@@ -20,6 +20,33 @@ const os = require('os');
 
 const numCPUs = os.cpus().length;
 
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+    serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+    }
+});
+let db;
+
+async function run() {
+    try {
+        await client.connect();
+        db = client.db("ctfUsers"); // Set the global `db` variable
+        console.log("Connected to MongoDB!");
+    } catch (error) {
+        console.error("Failed to connect to MongoDB", error);
+    }
+}
+
+run()
+
+
+const cors = require("cors");
+app.use(cors({origin: "http://localhost:3000/"}));
+app.use(express.json());
+
 if (cluster.isMaster) {
     console.log(`🧠 Master ${process.pid} is running`);
 
@@ -36,32 +63,6 @@ if (cluster.isMaster) {
 
 } else {
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-    const client = new MongoClient(uri, {
-        serverApi: {
-            version: ServerApiVersion.v1,
-            strict: true,
-            deprecationErrors: true,
-        }
-    });
-    let db;
-
-    async function run() {
-        try {
-            await client.connect();
-            db = client.db("ctfUsers"); // Set the global `db` variable
-            console.log("Connected to MongoDB!");
-        } catch (error) {
-            console.error("Failed to connect to MongoDB", error);
-        }
-    }
-
-    run()
-
-
-    const cors = require("cors");
-    app.use(cors({origin: "http://localhost:3000/"}));
-    app.use(express.json());
 
 
     app.post(
@@ -92,6 +93,9 @@ if (cluster.isMaster) {
                     } catch (error) {
                         console.log(error);
                     }
+                }
+                else{
+                    return res.status(400).json({statusMessage: "Erroor"});
                 }
             }
         }

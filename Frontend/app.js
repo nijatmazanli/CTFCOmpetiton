@@ -2,10 +2,13 @@ const express = require('express');
 const path = require("node:path");
 const port = process.env.PORT || 3000;
 const axios = require("axios");
-app.set('trust proxy', true);
 
 const cluster = require('cluster');
 const os = require('os');
+const app = express();
+app.use(express.static(path.join(__dirname, "./Files/")));
+app.use(express.json());
+app.set('trust proxy', true);
 
 const numCPUs = os.cpus().length;
 
@@ -24,9 +27,6 @@ if (cluster.isMaster) {
     });
 
 } else {
-    const app = express();
-    app.use(express.static(path.join(__dirname, "./Files/")));
-    app.use(express.json());
 
     app.get('*', (req, res) => {
 

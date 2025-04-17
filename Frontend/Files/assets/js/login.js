@@ -13,9 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
             userAgent: navigator.userAgent
         };
         console.log(userData);
-
+        alert(userData);
         await axios.post('http://localhost:3000/login', userData).then((response) => {
             console.log(response);
+            alert(response.statusMessage);
         }).catch((error) => {
             console.log(error);
         })
