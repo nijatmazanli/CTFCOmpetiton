@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         console.log(userData);
         alert(userData);
-        await axios.post('http://localhost:3000/login', userData).then((response) => {
+        await axios.post('/login', userData).then((response) => {
             console.log(response);
             alert(response.statusMessage);
         }).catch((error) => {
