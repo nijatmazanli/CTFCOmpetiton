@@ -9,14 +9,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return JSON.parse(jsonPayload);
     }
 
-    const checkLogin = login =>{
-        console.log(localStorage.getItem('token'));
-        const dexoded = parseJwt(localStorage.getItem("token"))
-        const now = Math.floor(Date.now() / 1000); // Current time in seconds
-        console.log(dexoded,now)
-        if (localStorage.getItem('token') && dexoded.exp !== now){
-            alert("You have an active token. After closing this alert, you will be redirected to the main page.");
-            window.location.href = "/";
+    const checkLogin = login => {
+        const decTok = localStorage.getItem('token') || "empty"
+        if (decTok){
+            console.log(decTok);
+            const dexoded = parseJwt(decTok)
+            const now = Math.floor(Date.now() / 1000); // Current time in seconds
+            console.log(dexoded, now)
+            if (decTok && dexoded.exp !== now) {
+                alert("You have an active token. After closing this alert, you will be redirected to the main page.");
+                window.location.href = "/";
+            }
         }
     }
     checkLogin();
