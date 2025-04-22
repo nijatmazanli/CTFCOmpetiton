@@ -81,15 +81,21 @@ if (cluster.isMaster) {
                 if (username === req.body.username && password === req.body.password) {
                     try {
                         const user = {
-                            ip: req.ip,
-                            userAgent: req.headers['user-agent'],
+                            ip: req.body.ip,
+                            userAgent: req.body.userAgent,
                             password: req.body.password,
                             username: req.body.username,
                         }
                         console.log(user);
                         const result = await db.collection("users").insertOne(user);
                         console.log(result);
-                        res.status(200).send(result);
+                        const token = jwt.sign({user},process.env.SECRET, {expiresIn: "1h"});
+                        console.log(token)
+                        const respData ={
+                            token:token,
+                            username: req.body.username,
+                        }
+                        res.status(200).send(respData);
                     } catch (error) {
                         console.log(error);
                     }

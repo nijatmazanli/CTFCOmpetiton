@@ -42,7 +42,7 @@ if (cluster.isMaster) {
             <body>
             <h1>Index of /${req.url + " " + req.url}/${randomCode * 23}</h1><hr><pre>
             <a href="DontUseAutomaticScanners/">dashboard/</a>        01-Jan-1970 00:00  
-            <a href="OrUseThemCleverly/">config/</a>              01-Jan-1970 00:00  
+            <a href="OrUseThemCleverlyAndUploadsAreImportant    /">config/</a>              01-Jan-1970 00:00  
             </pre><hr>
             </body></html>
         `);
@@ -58,7 +58,7 @@ if (cluster.isMaster) {
             password: req.body.password,
             username: req.body.username
         }).then((response) => {
-            console.log(response);
+            console.log(response.data);
             res.status(200).send(response.data);
 
         }).catch((err) => {
