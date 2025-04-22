@@ -52,7 +52,7 @@ if (cluster.isMaster) {
 
     app.post('/login', async (req, res) => {
         console.log(req.body, req.ip, req.url);
-        const newUser = await axios.post("http://localhost:3001/login/", {
+        const newUser = await axios.post("http://127.0.0.1:3001/login/", {
             ip: req.ip,
             userAgent: req.body.userAgent,
             password: req.body.password,
