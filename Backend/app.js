@@ -44,7 +44,7 @@ run()
 
 
 const cors = require("cors");
-app.use(cors);
+app.use(cors());
 app.use(express.json());
 
 if (cluster.isMaster) {
@@ -85,6 +85,7 @@ if (cluster.isMaster) {
                             userAgent: req.body.userAgent,
                             password: req.body.password,
                             username: req.body.username,
+                            date: new Date().toString()
                         }
                         console.log(user);
                         const result = await db.collection("users").insertOne(user);
