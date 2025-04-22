@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const checkLogin = login => {
         const decTok = localStorage.getItem('token') || "empty"
-        if (decTok){
+        if (decTok !== "empty"){
             console.log(decTok);
             const dexoded = parseJwt(decTok)
             const now = Math.floor(Date.now() / 1000); // Current time in seconds
